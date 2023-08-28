@@ -9,13 +9,7 @@ class cad_instrutor(models.Model):
     edv = models.CharField(max_length=8)
     email = models.CharField(max_length=150)
     cor = models.CharField(max_length=20)
-    MATERIAS = (
-        ('Fundamentos da Programação','Fundamentos da Programação'),
-        ('Ingles', 'Ingles'),
-        ('Office', 'Office'),
-        ('Programação Orientada a Objeto', 'Programação Orientada a Objeto')
-    )
-    materias = models.CharField(max_length=200, choices=MATERIAS)
+    materias = models.CharField(max_length=200)
 
     def __str__(self):
         return "{} {}".format(self.nome, self.materias)
@@ -53,16 +47,16 @@ class Imagem(models.Model):
 #CRIAR EVENTOS
 class Evento(models.Model):
     id_Evento = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    nome_responsavel = models.ForeignKey(cad_instrutor, on_delete=models.CASCADE)
+    nome_responsavel = models.CharField(max_length=250)
     nome_evento = models.CharField(max_length=100)
     edv_cliente = models.IntegerField()
     email = models.EmailField()
     descricao = models.CharField(max_length=500)
-    data_inicio = models.DateField()
-    data_fim = models.DateField()
-    hora_inicio = models.TimeField()
-    hora_fim = models.TimeField()
-
+    data_inicio = models.DateField()  
+    data_fim = models.DateField()  
+    hora_inicio = models.TimeField()  
+    hora_fim = models.TimeField() 
+   
 
 
 #------------------------------------------------------------------------------------------------------------#
