@@ -12,7 +12,7 @@ class cad_instrutor(models.Model):
     materias = models.CharField(max_length=200)
 
     def __str__(self):
-        return "{} {}".format(self.nome, self.materias)
+        return "{} {}".format(self.nome, self.cor)
     
 #CADASTRAR SALAS
 class cad_sala(models.Model):
@@ -32,9 +32,9 @@ class cad_sala(models.Model):
     televisao = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.nome_sala
+        return self.nome_sala, self.localizacao_sala
 
-#ARMAZERNAR IMAGENS DAS SALAS
+#ARMAZERNAR IMAGENS DAS SALAS/ RELACIONANDO COM O MODEL cad_sala
 class Imagem(models.Model):
     sala = models.ForeignKey(cad_sala, on_delete=models.CASCADE)
     Imagem = models.ImageField(upload_to='imagens/')
@@ -50,12 +50,15 @@ class Evento(models.Model):
     nome_responsavel = models.CharField(max_length=250)
     nome_evento = models.CharField(max_length=100)
     edv_cliente = models.IntegerField()
-    email = models.EmailField()
     descricao = models.CharField(max_length=500)
     data_inicio = models.DateField()  
     data_fim = models.DateField()  
     hora_inicio = models.TimeField()  
     hora_fim = models.TimeField() 
+    local = models.CharField(max_length=20)
+    nome_sala = models.CharField(max_length=20)
+    #Criei o campo historico para registrar o momento em que foi solicitado 14/09
+    historico = models.DateTimeField(auto_now=True, editable=False)
    
 
 
