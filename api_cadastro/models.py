@@ -19,11 +19,11 @@ class cad_sala(models.Model):
     id_sala = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     nome_sala = models.CharField(max_length=20)
     PREDIO = (
-        ('1', 'Ca600-ETS'),
-        ('2', 'Ca170-ETS'),
-        ('3', 'Ca140-ETS'),
+        ('Ca600', 'Ca600'),
+        ('Ca170', 'Ca170'),
+        ('Ca140', 'Ca140'),
     )
-    predio_sala = models.CharField(max_length=1, choices=PREDIO, default=1)
+    predio_sala = models.CharField(max_length=1, choices=PREDIO)
     localizacao_sala = models.CharField(max_length=100)
     capacidade = models.IntegerField(default=0)
     computador = models.IntegerField(default=0)
