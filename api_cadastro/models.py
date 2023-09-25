@@ -23,7 +23,7 @@ class cad_sala(models.Model):
         ('Ca170', 'Ca170'),
         ('Ca140', 'Ca140'),
     )
-    predio_sala = models.CharField(max_length=1, choices=PREDIO)
+    predio_sala = models.CharField(max_length=20, choices=PREDIO)
     localizacao_sala = models.CharField(max_length=100)
     capacidade = models.IntegerField(default=0)
     computador = models.IntegerField(default=0)
