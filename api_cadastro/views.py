@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from api_cadastro.serializers import *
 from api_cadastro.models import *
@@ -22,6 +21,7 @@ class cad_salaViewset(viewsets.ModelViewSet):
 class EventoViewset(viewsets.ModelViewSet):
     queryset = Evento.objects.all()
     serializer_class = EventoSerializer
+
 class ImagemViewset(viewsets.ModelViewSet):
     queryset = Imagem.objects.all()
     serializer_class = ImagemSerializer
