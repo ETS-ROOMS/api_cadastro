@@ -58,7 +58,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:5173",
-
+    "https://curly-robot-4pgx6qwgg49cqqqj-5173.app.github.dev", #sempre trocar pela URL do codespace frontend
 ]
 
 ROOT_URLCONF = 'setup.urls'
