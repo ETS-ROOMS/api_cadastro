@@ -1,6 +1,6 @@
 # <project>/<app>/management/commands/seed.py
 from django.core.management.base import BaseCommand
-from api_cadastro.models import cad_sala, Imagem
+from api_cadastro.models import Sala, Imagem
 from django.core.files.images import ImageFile
 from django.core.files import File
 
@@ -27,7 +27,7 @@ class Command(BaseCommand):
 def clear_data():
     """Deletes all the table data"""
     print("Delete Sala instances")
-    cad_sala.objects.all().delete()
+    Sala.objects.all().delete()
 
 
 def seed_db():
@@ -39,7 +39,7 @@ def seed_db():
     ca_170 = "Ca170"
     ca_140 = "Ca140"
 
-    sala = cad_sala(
+    sala = Sala(
         nome_sala="Lab. DS 1",
         predio_sala=ca_600,
         localizacao_sala="Térreo",
@@ -62,7 +62,7 @@ def seed_db():
     img.save()
     print("{} sala created.".format(sala))
 
-    sala = cad_sala(
+    sala = Sala(
         nome_sala="Lab. DS 2",
         predio_sala=ca_600,
         localizacao_sala="Térreo",
@@ -85,7 +85,7 @@ def seed_db():
     img.save()
     print("{} sala created.".format(sala))
 
-    sala = cad_sala(
+    sala = Sala(
         nome_sala="Lab. DS 3",
         predio_sala=ca_600,
         localizacao_sala="Térreo",
@@ -108,7 +108,7 @@ def seed_db():
     img.save()
     print("{} sala created.".format(sala))
 
-    sala = cad_sala(
+    sala = Sala(
         nome_sala="Lab. DS ETS",
         predio_sala=ca_170,
         localizacao_sala="Sub solo",
@@ -131,7 +131,7 @@ def seed_db():
     img.save()
     print("{} sala created.".format(sala))
 
-    sala = cad_sala(
+    sala = Sala(
         nome_sala="Lab. Eletrônica",
         predio_sala=ca_170,
         localizacao_sala="Sub solo",
@@ -154,7 +154,7 @@ def seed_db():
     img.save()
     print("{} sala created.".format(sala))
     
-    sala = cad_sala(
+    sala = Sala(
         nome_sala="Sala de Reunião",
         predio_sala=ca_170,
         localizacao_sala="Sub solo",
@@ -177,7 +177,7 @@ def seed_db():
     img.save()
     print("{} sala created.".format(sala))
 
-    sala = cad_sala(
+    sala = Sala(
         nome_sala="Sala Verde",
         predio_sala=ca_140,
         localizacao_sala="Sub solo",
@@ -200,7 +200,7 @@ def seed_db():
     img.save()
     print("{} sala created.".format(sala))
 
-    sala = cad_sala(
+    sala = Sala(
         nome_sala="Sala Amarela",
         predio_sala=ca_140,
         localizacao_sala="Sub solo",

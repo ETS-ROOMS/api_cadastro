@@ -8,23 +8,23 @@ from rest_framework.response import Response
 def extract_url(image_record):
     return image_record['Imagem']
 
-class cad_instrutorViewset(viewsets.ModelViewSet):
-    queryset = cad_instrutor.objects.all()
-    serializer_class = cad_instrutorSerializer
+class InstrutorViewset(viewsets.ModelViewSet):
+    queryset = Instrutor.objects.all()
+    serializer_class = InstrutorSerializer
 
 
-class cad_salaViewset(viewsets.ModelViewSet):
-    queryset = cad_sala.objects.all()
-    serializer_class = cad_salaSerializer
+class SalaViewset(viewsets.ModelViewSet):
+    queryset = Sala.objects.all()
+    serializer_class = SalaSerializer
 
     def list(self, request):
-        queryset = cad_sala.objects.all()
+        queryset = Sala.objects.all()
 
         salas = {}
 
         for sala in queryset:
             key = str(sala.id_sala)
-            salas[key] = cad_salaSerializer(sala).data
+            salas[key] = SalaSerializer(sala).data
             imgs_queryset = Imagem.objects.filter(sala=sala)
             salas[key]['images'] = map(extract_url, ImagemSerializer(imgs_queryset, many=True).data)
             

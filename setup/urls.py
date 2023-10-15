@@ -8,8 +8,8 @@ from django.conf.urls.static import static
 
 
 router = routers.DefaultRouter()
-router.register('cad_instrutor', cad_instrutorViewset, basename='cad_instrutor')
-router.register('cad_sala', cad_salaViewset, basename='cad_sala')
+router.register('instrutor', InstrutorViewset, basename='instrutor')
+router.register('sala', SalaViewset, basename='sala')
 router.register('evento', EventoViewset, basename='evento')
 router.register('imagens', ImagemViewset, basename='imagens')
 

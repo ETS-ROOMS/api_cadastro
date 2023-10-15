@@ -1,5 +1,5 @@
 from django import forms
-from .models import cad_sala, Imagem
+from .models import Sala, Imagem
 
 class ImagemForm(forms.ModelForm):
     class Meta:
@@ -9,5 +9,5 @@ class ImagemForm(forms.ModelForm):
 class SalaForm(forms.ModelForm):
     imagens = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
-        model = cad_sala
+        model = Sala
         fields = ['nome_sala', 'imagens']

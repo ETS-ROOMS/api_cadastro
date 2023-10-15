@@ -1,14 +1,14 @@
 from django.contrib import admin
-from api_cadastro.models import cad_instrutor, cad_sala,Imagem
+from api_cadastro.models import Instrutor, Sala,Imagem
 
 # Register your models here.
 
 class ImagemInline(admin.TabularInline):
     model = Imagem
 
-@admin.register(cad_sala)
+@admin.register(Sala)
 class SalaAdmin(admin.ModelAdmin):
     inlines = [ImagemInline]
 
 admin.site.register(Imagem)
-admin.site.register(cad_instrutor)
+admin.site.register(Instrutor)

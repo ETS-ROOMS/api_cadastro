@@ -13,7 +13,7 @@ from uuid import uuid4
 """
 
 
-class cad_instrutor(models.Model):
+class Instrutor(models.Model):
     id_instrutor = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     nome = models.CharField(max_length=100) 
     edv = models.CharField(max_length=8)
@@ -24,7 +24,7 @@ class cad_instrutor(models.Model):
     def __str__(self):
         return "{} {}".format(self.nome, self.cor)
     
-class cad_sala(models.Model):
+class Sala(models.Model):
     id_sala = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     nome_sala = models.CharField(max_length=20)
     PREDIO = (
@@ -44,7 +44,7 @@ class cad_sala(models.Model):
         return f'{self.nome_sala} {self.predio_sala}'
     
 class Imagem(models.Model):
-    sala = models.ForeignKey(cad_sala, on_delete=models.CASCADE)
+    sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
     Imagem = models.ImageField(upload_to='static/img/')
 
     def __str__(self):

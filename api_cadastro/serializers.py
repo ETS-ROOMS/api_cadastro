@@ -2,14 +2,14 @@ from rest_framework import serializers
 from api_cadastro.models import *
 
 
-class cad_instrutorSerializer(serializers.ModelSerializer):
+class InstrutorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = cad_instrutor
+        model = Instrutor
         fields = '__all__'
 
-class cad_salaSerializer(serializers.ModelSerializer):
+class SalaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = cad_sala
+        model = Sala
         fields = '__all__'
 
 class EventoSerializer(serializers.ModelSerializer):
