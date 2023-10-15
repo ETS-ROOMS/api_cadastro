@@ -41,11 +41,11 @@ class cad_sala(models.Model):
     televisao = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.nome_sala, self.localizacao_sala
+        return f'{self.nome_sala} {self.predio_sala}'
     
 class Imagem(models.Model):
     sala = models.ForeignKey(cad_sala, on_delete=models.CASCADE)
-    Imagem = models.ImageField(upload_to='imagens/')
+    Imagem = models.ImageField(upload_to='static/img/')
 
     def __str__(self):
         return f'Imagem da Sala {self.sala.nome_sala}'
