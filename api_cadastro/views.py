@@ -5,6 +5,9 @@ from rest_framework.response import Response
 
 # Create your views here.
 
+def extract_url(image_record):
+    return image_record['Imagem']
+
 class cad_instrutorViewset(viewsets.ModelViewSet):
     queryset = cad_instrutor.objects.all()
     serializer_class = cad_instrutorSerializer
@@ -15,8 +18,16 @@ class cad_salaViewset(viewsets.ModelViewSet):
 
     def list(self, request):
         queryset = cad_sala.objects.all()
-        serializer = cad_salaSerializer(queryset, many=True)
-        return Response(serializer.data)
+
+        salas = {}
+
+        for sala in queryset:
+            key = str(sala.id_sala)
+            salas[key] = cad_salaSerializer(sala).data
+            imgs_queryset = Imagem.objects.filter(sala=sala)
+            salas[key]['images'] = map(extract_url, ImagemSerializer(imgs_queryset, many=True).data)
+            
+        return Response(list(salas.values()))
 
 class EventoViewset(viewsets.ModelViewSet):
     queryset = Evento.objects.all()
