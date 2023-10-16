@@ -58,7 +58,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://fantastic-eureka-q59w6vp9q5qf6wj4-5173.app.github.dev", #sempre trocar pela URL do codespace frontend
+    "https://cuddly-robot-gv5g6x754w5fxr6-5173.app.github.dev", #sempre trocar pela URL do codespace frontend
 ]
 
 ROOT_URLCONF = 'setup.urls'

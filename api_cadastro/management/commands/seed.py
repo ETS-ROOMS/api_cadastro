@@ -1,6 +1,6 @@
 # <project>/<app>/management/commands/seed.py
 from django.core.management.base import BaseCommand
-from api_cadastro.models import Sala, Imagem
+from api_cadastro.models import Sala, Imagem, Instrutor
 from django.core.files.images import ImageFile
 from django.core.files import File
 
@@ -222,6 +222,12 @@ def seed_db():
     )
     img.save()
     print("{} sala created.".format(sala))
+
+    # -- Instrutores seed
+
+    Instrutor(
+        
+    )
     
 
 def run_seed(self, mode):
