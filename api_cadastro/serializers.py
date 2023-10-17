@@ -38,3 +38,8 @@ class ImagemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Imagem
         fields = '__all__'
+
+class MateriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Materia
+        fields = '__all__'

@@ -12,6 +12,7 @@ router.register('instrutor', InstrutorViewset, basename='instrutor')
 router.register('sala', SalaViewset, basename='sala')
 router.register('evento', EventoViewset, basename='evento')
 router.register('imagens', ImagemViewset, basename='imagens')
+router.register('materia', MateriaViewset, basename='materia')
 
 urlpatterns = [
     path('', include(router.urls)),

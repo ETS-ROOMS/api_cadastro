@@ -8,10 +8,27 @@ from rest_framework.response import Response
 def extract_url(image_record):
     return image_record['Imagem']
 
+class MateriaViewset(viewsets.ModelViewSet):
+    queryset = Materia.objects.all()
+    serializer_class = MateriaSerializer
+
+
 class InstrutorViewset(viewsets.ModelViewSet):
     queryset = Instrutor.objects.all()
     serializer_class = InstrutorSerializer
 
+    def list(self, request):
+        queryset = Instrutor.objects.all()
+
+        instrutores = {}
+
+        for instrutor in queryset:
+            key = str(instrutor.id_instrutor)
+            instrutores[key] = InstrutorSerializer(instrutor).data
+            materias_qset = Materia.objects.filter(instrutor=instrutor)
+            instrutores[key]['materias'] = MateriaSerializer(materias_qset, many=True).data
+        
+        return Response(list(instrutores.values()))
 
 class SalaViewset(viewsets.ModelViewSet):
     queryset = Sala.objects.all()
@@ -38,8 +55,30 @@ class EventoViewset(viewsets.ModelViewSet):
     def list(self, request):
         day = request.query_params.get('day')
         queryset = Evento.objects.filter(data_inicio=day, data_fim=day)
-        serializer = EventoSerializer(queryset, many=True)
-        return Response(serializer.data)
+
+        eventos = []
+
+        for idx, evt in enumerate(queryset):
+            data = EventoSerializer(evt).data
+            data['instrutor_data'] = InstrutorSerializer(Instrutor.objects.get(pk=data['instrutor'])).data
+            data['materia_data'] = MateriaSerializer(Materia.objects.get(pk=data['materia'])).data
+            eventos.append(data)
+
+        return Response(eventos)
+
+    def create(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=201, headers=headers)
+        except DateTakenError:
+            return Response({"error": "bad request"}, status=400)
+        except e:
+            raise e
+
+
 
 class ImagemViewset(viewsets.ModelViewSet):
     queryset = Imagem.objects.all()
