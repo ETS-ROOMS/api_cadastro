@@ -75,22 +75,21 @@ class Evento(models.Model):
 
     #Metodo clean(Validações personalizada vos dados do modelo (antes de serem salvos))
     def clean(self):
+        if self.hora_inicio >= self.hora_fim:
+            raise DateTakenError("A hora de início deve ser anterior à hora de término.")
 
-        if self.hora_inicio == self.hora_fim:
-            raise DateTakenError("A hora de início não pode ser igual à hora de término.")
-
-        #Verificando se á conflito no horario entre os eventos 
+        # Verificando se há conflito de horário com outros eventos no mesmo local e sala
         eventos_conflitantes = Evento.objects.exclude(id_Evento=self.id_Evento).filter(
-            data_fim=self.data_inicio,
-            hora_fim__gte=self.hora_inicio,
+            data_inicio=self.data_inicio,
             local=self.local,
-            nome_sala=self.nome_sala
+            nome_sala=self.nome_sala,
+            hora_inicio__lt=self.hora_fim,  # O evento existente termina antes do novo evento começar
+            hora_fim__gt=self.hora_inicio,   # O evento existente começa depois do novo evento terminar
         )
         if eventos_conflitantes.exists():
             raise DateTakenError("Existe um conflito de horário com outro evento no mesmo local e sala.")
 
-        
-        
+    # Método save (para garantir que as validações no método clean sejam chamadas antes de salvar)
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
