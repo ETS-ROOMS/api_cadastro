@@ -73,10 +73,8 @@ class EventoViewset(viewsets.ModelViewSet):
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status=201, headers=headers)
-        except DateTakenError:
-            return Response({"error": "bad request"}, status=400)
-        except e:
-            raise e
+        except DateTakenError as e:
+            return Response({"error": str(e)}, status=400)
 
 
 
