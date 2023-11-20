@@ -30,6 +30,15 @@ class InstrutorViewset(viewsets.ModelViewSet):
         
         return Response(list(instrutores.values()))
 
+    def create(self, request, *args, **kwargs):
+        materias = request.data['materias']
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        instrutor = serializer.save()
+        for materia in materias:
+            Materia.objects.create(nome=materia, instrutor=instrutor)
+        return Response(serializer.data, status=201)
+
 class SalaViewset(viewsets.ModelViewSet):
     queryset = Sala.objects.all()
     serializer_class = SalaSerializer
