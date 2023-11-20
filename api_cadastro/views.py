@@ -54,7 +54,10 @@ class EventoViewset(viewsets.ModelViewSet):
 
     def list(self, request):
         day = request.query_params.get('day')
-        queryset = Evento.objects.filter(data_inicio=day, data_fim=day)
+        if day == None:
+            queryset = Evento.objects.all().order_by('-historico')
+        else:
+            queryset = Evento.objects.filter(data_inicio=day, data_fim=day)
 
         eventos = []
 
