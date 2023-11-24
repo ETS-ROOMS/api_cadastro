@@ -2,6 +2,9 @@ from rest_framework import viewsets
 from api_cadastro.serializers import *
 from api_cadastro.models import *
 from rest_framework.response import Response
+from dateutil.rrule import rrule, DAILY, MONTHLY, WEEKLY
+from dateutil.parser import parse
+from datetime import datetime
 
 # Create your views here.
 
@@ -80,6 +83,58 @@ class EventoViewset(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         try:
+            if request.data['recorrencia']:
+                try:
+                    tipo_recorrencia_str = request.data['tipo_recorrencia']
+                    data_inicial_str = request.data['data_inicio']
+                    data_final_str = request.data['data_fim']
+        
+                    data_inicial = parse(data_inicial_str)
+                    data_final = parse(data_final_str)
+        
+                    if tipo_recorrencia_str == 'diaria':
+                        regra_recorrente = rrule(DAILY, dtstart=data_inicial, until=data_final)
+        
+                    elif tipo_recorrencia_str == 'semanal':
+                        regra_recorrente = rrule(WEEKLY, dtstart=data_inicial, until=data_final)
+        
+                    elif tipo_recorrencia_str == 'mensal':
+                        regra_recorrente = rrule(MONTHLY, dtstart=data_inicial, until=data_final)
+        
+                    else:
+                        return Response(
+                            status=400,
+                            data={ "error": "TIPO_RECORRENCIA errado!!" }
+                        )
+            
+                    for data in regra_recorrente:
+                        instrutor = Instrutor.objects.get(pk=request.data['instrutor'])
+                        materia = Materia.objects.get(pk=request.data['materia'])
+                        print("REQUEST DATA", request.data)
+                        Evento(
+                            instrutor=instrutor,
+                            materia=materia,
+                            descricao=request.data['descricao'],
+                            data_inicio=data,
+                            data_fim=data,
+                            hora_inicio=datetime.strptime(request.data['hora_inicio'], '%H:%M').time(),
+                            hora_fim=datetime.strptime(request.data['hora_fim'], '%H:%M').time(),
+                            local=request.data['local'],
+                            nome_sala=request.data['nome_sala'],
+                        ).save()
+        
+                    return Response(data={'msg': 'criado com sucesso'})
+                except KeyError:
+                    return Response(status=400, data={
+                        "error": "Os parâmetros 'data_inicial', 'data_final' e 'tipo_recorrencia' são obrigatórios."
+                        })
+                except Exception as e:
+                    print(e)
+                    return Response(
+                        status=500,
+                        data=request.data
+                    )
+                
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)

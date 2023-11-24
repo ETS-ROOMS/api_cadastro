@@ -1,5 +1,5 @@
 from django.contrib import admin
-from api_cadastro.models import Instrutor, Sala,Imagem
+from api_cadastro.models import Instrutor, Sala,Imagem, Evento
 
 # Register your models here.
 
@@ -12,3 +12,5 @@ class SalaAdmin(admin.ModelAdmin):
 
 admin.site.register(Imagem)
 admin.site.register(Instrutor)
+
+admin.site.register(Evento)
