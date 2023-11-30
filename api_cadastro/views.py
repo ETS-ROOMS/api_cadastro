@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from dateutil.rrule import rrule, DAILY, MONTHLY, WEEKLY
 from dateutil.parser import parse
 from datetime import datetime
+from rest_framework import views, parsers
 
 # Create your views here.
 
@@ -148,3 +149,19 @@ class EventoViewset(viewsets.ModelViewSet):
 class ImagemViewset(viewsets.ModelViewSet):
     queryset = Imagem.objects.all()
     serializer_class = ImagemSerializer
+
+class UploadView(views.APIView):
+    parser_classes = (parsers.MultiPartParser, )
+
+    def post(self, request, format=None):
+        sala_id = request.data['sala_id']
+        up_file = request.FILES['file']
+
+        sala = Sala.objects.get(pk=sala_id)
+
+        Imagem.objects.create(
+            sala=sala,
+            Imagem=up_file
+        ).save()
+
+        return Response(status=201)

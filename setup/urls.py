@@ -17,4 +17,5 @@ router.register('materia', MateriaViewset, basename='materia')
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('upload/', UploadView.as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
