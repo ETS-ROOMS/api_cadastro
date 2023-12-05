@@ -49,8 +49,9 @@ class SalaViewset(viewsets.ModelViewSet):
     serializer_class = SalaSerializer
 
     def list(self, request):
-        entries = os.listdir("./static")
+        entries = os.listdir("./static/img")
         print("ENTRIES: ", entries)
+        
         queryset = Sala.objects.all()
 
         salas = {}
