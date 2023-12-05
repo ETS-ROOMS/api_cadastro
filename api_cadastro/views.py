@@ -6,6 +6,7 @@ from dateutil.rrule import rrule, DAILY, MONTHLY, WEEKLY
 from dateutil.parser import parse
 from datetime import datetime
 from rest_framework import views, parsers
+import os
 
 # Create your views here.
 
@@ -48,6 +49,8 @@ class SalaViewset(viewsets.ModelViewSet):
     serializer_class = SalaSerializer
 
     def list(self, request):
+        entries = os.listdir("./static")
+        print("ENTRIES: ", entries)
         queryset = Sala.objects.all()
 
         salas = {}
