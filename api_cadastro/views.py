@@ -49,9 +49,6 @@ class SalaViewset(viewsets.ModelViewSet):
     serializer_class = SalaSerializer
 
     def list(self, request):
-        entries = os.listdir("./static/img")
-        print("ENTRIES: ", entries)
-        
         queryset = Sala.objects.all()
 
         salas = {}
@@ -139,7 +136,11 @@ class EventoViewset(viewsets.ModelViewSet):
                         status=500,
                         data=request.data
                     )
-                
+            
+            instrutor = Instrutor.objects.get(pk=request.data['instrutor'])
+            if instrutor.edv != request.data['edv']:
+                return Response({"error": "Edv incorreto"}, status=403)
+            
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
